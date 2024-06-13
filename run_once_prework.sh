@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# para ejecutarlo directamente desde la terminal
+# sh -c "$(curl -s https://raw.githubusercontent.com/FQ211776/dot/master/run_once_prework.sh)"
+
 set -e
 
 CRE=$(tput setaf 1)

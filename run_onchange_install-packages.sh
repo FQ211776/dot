@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# para ejecutarlo directamente desde la terminal
+# sh -c "$(curl -s https://raw.githubusercontent.com/FQ211776/dot/master/run_onchange_install-packages.sh)"
+
 #  ██████╗ ██╗ ██████╗███████╗    ██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗     ███████╗██████╗
 #  ██╔══██╗██║██╔════╝██╔════╝    ██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██║     ██║     ██╔════╝██╔══██╗
 #  ██████╔╝██║██║     █████╗      ██║██╔██╗ ██║███████╗   ██║   ███████║██║     ██║     █████╗  ██████╔╝
