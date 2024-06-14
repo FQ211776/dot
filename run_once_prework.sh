@@ -46,6 +46,7 @@ display_menu() {
     gum style --foreground 35 "1. Configurar SSH"
     gum style --foreground 35 "2. Clonar .gitconfig"
     gum style --foreground 35 "3. Configurar GPG"
+    gum style --foreground 35 "4. dividir .gitconfig"
     gum style --foreground 35 "q. Salir"
 }
 
@@ -125,10 +126,22 @@ Configurar_gpg() {
     sleep 15
     printf "gpg --armor --export *** | gh gpg-key add -\n"
     #gpg --armor --export *** | gh gpg-key add -
-    geany "$HOME"/.gitconfig
-
+    git config -f ~/.gitconfig-local user.name "Roberto Flores"
+    git config -f ~/.gitconfig-local user.email fq211776@alumno.udb.edu.sv
+    git config -f ~/.gitconfig-local user.signingkey ``
+    printf "gpg --armor --export *** | gh gpg-key add -\n"
+    printf "git config -f ~/.gitconfig-local user.signingkey ``\n"
+    geany "$HOME"/.gitconfig-local
     rm -rf ~/test && mkdir ~/test && cd ~/test && git init && echo "test" >>test && git add test && git commit -m "test" && git log --show-signature && cd .. && rm -rf test
+}
 
+Split_gitconfig(){
+    #https://filipe.kiss.ink/multiple-gpg-keys-git/
+
+    git config --get meta.isLocalConfig
+    git config -f ~/.gitconfig-local meta.isLocalConfig true
+    git config --global include.path "~/.gitconfig-local"
+    git config --get meta.isLocalConfig
 }
 
 main() {
@@ -142,6 +155,7 @@ main() {
         1) Configurar_ssh ;;
         2) Clone_gitconfig ;;
         3) Configurar_gpg ;;
+        4) Split_gitconfig ;;
         q) clear && exit ;;
         *)
             gum style --foreground 50 "Invalid choice. Please select a valid option."
