@@ -74,8 +74,10 @@ display_menu() {
     echo
     gum style --foreground 35 "1. Instalar paquetes adicionales no incluidos en los dotfiles originales."
     gum style --foreground 35 "2. Instalar paquetes adicionales desde aur no incluidos en los dotfiles originales."
-    gum style --foreground 35 "3. Instalar Dotfiles."
-    gum style --foreground 35 "4. Instalar y configurar ZSH y Fish."
+    gum style --foreground 35 "3. Clonar o actualizar copia local de los dotfiles originales."
+    gum style --foreground 35 "4. Instalar los dotfiles originales."
+    gum style --foreground 35 "5. configurar ZSH."
+    gum style --foreground 35 "5. configurar Fish."
     echo
     gum style --foreground 33 "Type your selection or 'q' to return to main menu."
 }
@@ -147,7 +149,7 @@ Instalar_paquetes_adicionales() {
     done
 }
 
-Instalar_dotfiles() {
+Instalar_repositorio() {
     ########## ---------- Preparing Folders ---------- ##########
 
     # Verifies if the archive user-dirs.dirs doesn't exist in ~/.config
@@ -159,24 +161,54 @@ Instalar_dotfiles() {
 
     logo "Downloading dotfiles"
 
-    repo_url="https://github.com/gh0stzk/dotfiles"
-    repo_dir="$HOME/dotfiles"
+    # repo_url="https://github.com/gh0stzk/dotfiles"
+    # repo_dir="$HOME/dotfiles"
+    repo_dir="$HOME/Developments/github.com/gh0stzk"
 
-    # Verifies if the folder of the repository exists, and if it does, deletes it
-    if [ -d "$repo_dir" ]; then
-        printf "Removing existing dotfiles repository\n"
-        rm -rf "$repo_dir"
-    fi
+    # Crear carpeta de respaldo si no existe
+    mkdir -p "$repo_dir"
 
-    # Clone the repository
-    printf "Cloning dotfiles from %s\n" "$repo_url"
-    git clone "$repo_url" "$repo_dir"
-    sleep 2
-    clear
+    download_repo() {
+        repo="https://github.com/${1}/${2}"
+        folder="${repo_dir}/${2}"
+        if [ ! -d $folder ]; then
+
+            printf 'Downloading dotfiles from %s%s %s into %s%s\n' "${BLD}${CYE}" "${repo}" "${CNC}" "${CGR}" "${folder}"
+            printf '%s\n' "${CNC}"
+
+            git clone --depth 1 ${repo} ${folder}
+            sleep 15
+        else
+            printf 'Updating dotfiles from %s%s %s in %s%s\n' "${BLD}${CYE}" "${repo}" "${CNC}" "${CGR}" "${folder}"
+            printf '%s\n' "${CNC}"
+
+            git -C "${folder}" pull --rebase
+            sleep 60
+        fi
+    }
+
+    download_repo "gh0stzk" "dotfiles"
+
+    # # Verifies if the folder of the repository exists, and if it does, deletes it
+    # if [ -d "$repo_dir" ]; then
+    #     printf "Removing existing dotfiles repository\n"
+    #     rm -rf "$repo_dir"
+    # fi
+
+    # # Clone the repository
+    # printf "Cloning dotfiles from %s\n" "$repo_url"
+    # git clone "$repo_url" "$repo_dir"
+    # sleep 2
+    # clear
+}
+
+Instalar_dotfiles() {
 
     ########## ---------- Backup files ---------- ##########
 
     logo "Backup files"
+
+    repo_dir="$HOME/Developments/github.com/gh0stzk/dotfiles"
 
     printf "If you already have a powerful and super Pro NEOVIM configuration, write 'n' in the next question. If you answer 'y' your neovim configuration will be moved to the backup directory.\n\n"
 
@@ -190,7 +222,7 @@ Instalar_dotfiles() {
     done
 
     printf "\nBackup files will be stored in %s%s%s/.RiceBackup%s \n\n" "${BLD}" "${CRE}" "$HOME" "${CNC}"
-    sleep 10
+    sleep 3
 
     [ ! -d "$backup_folder" ] && mkdir -p "$backup_folder"
 
@@ -260,9 +292,10 @@ Instalar_dotfiles() {
     [ ! -d ~/.config ] && mkdir -p ~/.config
     [ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
     [ ! -d ~/.local/share ] && mkdir -p ~/.local/share
-    rm -rf ~/dotfiles/config/mpd
-    rm -rf ~/dotfiles/config/ncmpcpp
-    for dirs in ~/dotfiles/config/*; do
+    #  echo $folder
+    #  rm -rfv $folder/config/mpd
+    #  rm -rfv $folder/config/ncmpcpp
+    for dirs in $repo_dir/config/*; do
         dir_name=$(basename "$dirs")
         # If the directory is nvim and the user doesn't want to try it, skip this loop
         if [[ $dir_name == "nvim" && $try_nvim != "y" ]]; then
@@ -278,29 +311,29 @@ Instalar_dotfiles() {
     done
 
     for folder in applications asciiart fonts startup-page; do
-        if cp -R ~/dotfiles/misc/$folder ~/.local/share/ 2>>RiceError.log; then
+        if cp -R $repo_dir/misc/$folder ~/.local/share/ 2>>RiceError.log; then
             printf "%s%s%s %sfolder copied succesfully!%s\n" "${BLD}" "${CYE}" "$folder" "${CGR}" "${CNC}"
-            sleep 1
+            sleep 15
         else
             printf "%s%s%s %sfolder failed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "$folder" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-            sleep 1
+            sleep 15
         fi
     done
 
-    if cp -R ~/dotfiles/misc/bin ~/.local/ 2>>RiceError.log; then
+    if cp -R $repo_dir/misc/bin ~/.local/ 2>>RiceError.log; then
         printf "%s%sbin %sfolder copied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
-        sleep 1
+        sleep 15
     else
         printf "%s%sbin %sfolder failed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-        sleep 1
+        sleep 15
     fi
 
-    if cp -R ~/dotfiles/misc/firefox/* ~/.mozilla/firefox/*.default-release/ 2>>RiceError.log; then
+    if cp -R $repo_dir/misc/firefox/* ~/.mozilla/firefox/*.default-release/ 2>>RiceError.log; then
         printf "%s%sFirefox theme %scopied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
-        sleep 1
+        sleep 15
     else
         printf "%s%sFirefox theme %sfailed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-        sleep 1
+        sleep 15
     fi
 
     sed -i "s/user_pref(\"browser.startup.homepage\", \"file:\/\/\/home\/z0mbi3\/.local\/share\/startup-page\/index.html\")/user_pref(\"browser.startup.homepage\", \"file:\/\/\/home\/$USER\/.local\/share\/startup-page\/index.html\")/" "$HOME"/.mozilla/firefox/*.default-release/user.js
@@ -309,7 +342,7 @@ Instalar_dotfiles() {
     fc-cache -rv >/dev/null 2>&1
 
     printf "\n\n%s%sFiles copied succesfully!!%s\n" "${BLD}" "${CGR}" "${CNC}"
-    sleep 5
+    sleep 60
 
 }
 
@@ -368,42 +401,30 @@ desde_aur() {
         }
     fi
 
-    # Lista de programas a instalar
-    aur_dependencias=(ttf-meslo-nerd zoxide-git flutter gitkraken localsend siji-ng ttf-unifont noto-color-emoji-fontconfig xorg-fonts-misc ttf-dejavu ttf-meslo-nerd-font-powerlevel10k noto-fonts-emoji powerline-fonts microsoft-edge-stable-bin microsoft-edge-beta-bin bcompare brew ghq mise git-delta ydiff ghq)
+    aur_dependencias=(ttf-meslo-nerd zoxide-git flutter gitkraken ttf-unifont noto-color-emoji-fontconfig xorg-fonts-misc ttf-dejavu ttf-meslo-nerd-font-powerlevel10k noto-fonts-emoji powerline-fonts microsoft-edge-stable-bin microsoft-edge-beta-bin bcompare brew ghq mise git-delta ydiff ghq)
+    #siji-ng localsend
 
+    # Función para verificar si un paquete está instalado en AUR
     is_installed_aur() {
         pacman -Qi "$1" &>/dev/null
     }
 
-    #Comprobar e instalar los paquetes de AUR
+    # Instalación de paquetes AUR (optimizado)
     for paquete in "${aur_dependencias[@]}"; do
-        if ! is_installed_aur "$paquete"; then
-            printf "%s%s%s %sinstalling $paquete from AUR.%s\n" "${BLD}" "${CYE}" "$paquete" "${CBL}" "${CNC}"
-            if paru -S "$paquete" --skipreview >>RiceError.log; then
-                printf "%s%s%s %shas been installed succesfully from AUR.%s\n" "${BLD}" "${CYE}" "$paquete" "${CBL}" "${CNC}"
-                sleep 1
-            else
-                printf "\n%s%sFailed to install $paquete. You may need to install it manually%s\n" "${BLD}" "${CRE}" "${CNC}"
-                # printf "%s%s%s %shas not been installed correctly from AUR. See %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "$paquete" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-                sleep 1
-            fi
+        if is_installed_aur "$paquete"; then # No invertimos la condición con '!'
+            printf '%s%s%s %sya está instalado desde AUR!%s\n' "${BLD}" "${CYE}" "$paquete" "${CGR}" "${CNC}"
         else
-            printf '%s%s%s %sis already installed on your system from AUR!%s\n' "${BLD}" "${CYE}" "$paquete" "${CGR}" "${CNC}"
-            sleep 1
-        fi
-    done
+            printf '%s%s%s %sinstalando desde AUR...%s\n' "${BLD}" "${CYE}" "$paquete" "${CBL}" "${CNC}"
+            paru -S "$paquete" --skipreview
 
-    # # Verifica si cada programa ya está instalado
-    # for programa in "${dependencias[@]}"; do
-    #     if command -v "$programa" >/dev/null 2>&1; then
-    #         printf "\n%s%s%s is already installed%s\n" "${BLD}" "${CGR}" "$programa" "${CNC}"
-    #     else
-    #         printf "\n%s%sInstalling %s, this should take a while!%s\n" "${BLD}" "${CBL}" "$programa" "${CNC}"
-    #         # Reemplaza 'paru -S' con el comando adecuado para instalar programas en tu sistema
-    #         # Por ejemplo, 'sudo apt-get install' en Ubuntu.
-    #          paru -S "$programa" --skipreview
-    #     fi
-    # done
+            if paru -Q "$paquete" &>/dev/null; then # Verificamos si la instalación fue exitosa
+                printf '%s%s%s %sse instaló correctamente desde AUR!%s\n' "${BLD}" "${CYE}" "$paquete" "${CGR}" "${CNC}"
+            else
+                printf '%s%s%s %sno se pudo instalar. Instálalo manualmente.%s\n' "${BLD}" "${CRE}" "$paquete" "${CNC}"
+            fi
+        fi
+        sleep 1 # Pausa opcional
+    done
 
 }
 
@@ -452,7 +473,7 @@ zsh_() {
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    cd $HOME/ && wget https://raw.githubusercontent.com/xerolinux/xero-fixes/main/conf/.p10k.zsh && rm ~/.zshrc && wget https://raw.githubusercontent.com/xerolinux/xero-fixes/main/conf/.zshrc
+    cd $HOME/ && wget https://raw.githubusercontent.com/xerolinux/xero-fixes/main/conf/.p10k.zsh
     gum style --foreground 35 "ZSH setup complete! Log out and back in."
 
     logo "Changing default shell to zsh"
@@ -465,7 +486,7 @@ zsh_() {
     else
         printf "%s%sYour shell is already zsh\nGood bye! installation finished, now reboot%s\n" "${BLD}" "${CGR}" "${CNC}"
     fi
-
+    atuin import auto
     sleep 3
 
 }
@@ -486,6 +507,7 @@ fish_() {
 
     echo "Fish, Oh-My-Fish y el tema bobthefish se han instalado correctamente."
     echo "Por favor, cierra y vuelve a abrir tu terminal o inicia una nueva sesión p"
+    atuin import auto
 }
 
 main() {
@@ -499,9 +521,10 @@ main() {
         case $CHOICE in
         1) Instalar_paquetes_adicionales ;;
         2) desde_aur ;;
-        3) Instalar_dotfiles ;;
-        4) zsh_ ;;
-        5) fish_ ;;
+        3) Instalar_repositorio ;;
+        4) Instalar_dotfiles ;;
+        5) zsh_ ;;
+        6) fish_ ;;
         q) clear && exit ;;
         *)
             gum style --foreground 50 "Invalid choice. Please select a valid option."
