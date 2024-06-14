@@ -1,0 +1,891 @@
+###############################################################################
+
+# [commit]
+
+# Configuración relacionada con los commits
+
+###############################################################################
+
+[commit]
+
+    gpgsign = true                   # Habilitar la firma GPG por defecto en los commits
+
+
+
+###############################################################################
+
+# [credential]
+
+# Configuración del almacenamiento de credenciales
+
+###############################################################################
+
+[credential]
+
+	helper = store
+
+#   helper = cache --timeout=604800  # Alternativa: cache de credenciales con un tiempo de espera de una semana
+
+
+
+###############################################################################
+
+# [init]
+
+# Configuración por defecto para la inicialización de nuevos repositorios
+
+###############################################################################
+
+[init]
+
+    defaultBranch = master           # Nombre de la rama por defecto al inicializar un nuevo repositorio
+
+
+
+###############################################################################
+
+# [advice]
+
+# Configuración de los mensajes de consejo de Git
+
+###############################################################################
+
+[advice]
+
+    detachedHead = false             # Deshabilitar el mensaje de advertencia para un HEAD separado
+
+###############################################################################
+
+# [interactive]
+
+# Configuración para la visualización de diferencias interactivas
+
+###############################################################################
+
+[interactive]
+
+    diffFilter = diff-so-fancy --patch  # Usa 'diff-so-fancy' para mostrar diferencias de manera más legible
+
+
+
+###############################################################################
+
+# [push]
+
+# Configuración para el comportamiento de los 'push'
+
+###############################################################################
+
+# Push the current branch and set the remote as upstream automatically
+
+[push]
+
+    autoSetupRemote = true   # Configura automáticamente el remoto como upstream
+
+    default = current        # Empuja la rama actual por defecto
+
+
+
+###############################################################################
+
+# [branch]
+
+# Configuración para las ramas
+
+###############################################################################
+
+[branch]
+
+    autosetupmerge = true    # Configura automáticamente el merge cuando se crea una nueva rama
+
+
+
+###############################################################################
+
+# [hub]
+
+# Configuración del protocolo para 'hub'
+
+###############################################################################
+
+[hub]
+
+    protocol = ssh           # Usa SSH para 'hub'
+
+
+
+###############################################################################
+
+# [github]
+
+# Configuración específica para GitHub
+
+###############################################################################
+
+[github]
+
+    user = FQ211776          # Nombre de usuario de GitHub
+
+
+
+###############################################################################
+
+# [diff]
+
+# Configuración de la herramienta para mostrar diferencias
+
+###############################################################################
+
+# Use neovim as git diff and merge tool
+
+[diff]
+
+	tool = meld
+
+# [diff]
+
+#   tool = nvimdiff          # Alternativa: usa 'nvimdiff' (comentado)
+
+[difftool]
+
+    prompt = false           # No pide confirmación antes de iniciar la herramienta de diferencias
+
+#[difftool "nvimdiff"]
+
+#    cmd = nvim -d \"$LOCAL\" \"$REMOTE\"  # Comando para 'nvimdiff' (comentado)
+
+#    path =                   
+
+
+
+###############################################################################
+
+# [merge]
+
+# Configuración de la herramienta de merge
+
+###############################################################################
+
+[merge]
+
+    tool = meld              # Usa 'meld' como herramienta de merge
+
+    log = true               # Registra el historial de merges
+
+# [merge]
+
+#    tool = nvimdiff         # Alternativa: usa 'nvimdiff' (comentado)
+
+[mergetool]
+
+    prompt = true            # Pide confirmación antes de iniciar la herramienta de merge
+
+#[mergetool "nvimdiff"]
+
+#    cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"  # Comando para 'nvimdiff' (comentado)
+
+#    trustExitCode = true    
+
+
+
+###############################################################################
+
+# [tag]
+
+# Configuración para etiquetas
+
+###############################################################################
+
+[tag]
+
+    forceSignAnnotated = true  # Fuerza la firma de etiquetas anotadas
+
+
+
+###############################################################################
+
+# [apply]
+
+# Configuración para la aplicación de parches
+
+###############################################################################
+
+[apply]
+
+    whitespace = warn         # Detecta errores de espacios en blanco al aplicar un parche
+
+
+
+###############################################################################
+
+# [ghq]
+
+# Configuración para GHQ (una herramienta de gestión de repositorios)
+
+###############################################################################
+
+[ghq]
+
+    root = "~/Developments"         # Directorio raíz para GHQ
+
+    # root = "$HOME/Developments"         # Directorio raíz para GHQ
+
+[ghq "https://git.jetbrains.space/silverblue/hist/DotFiles.git"]
+
+    vcs = git                # Sistema de control de versiones
+
+     root = "$HOME/Developments" # Directorio raíz específico para este repositorio
+
+
+
+###############################################################################
+
+# [gpg]
+
+# Configuración del programa GPG
+
+###############################################################################
+
+[gpg]
+
+    program = /usr/bin/gpg   # Ruta al programa GPG en sistemas Unix
+
+#    program = C:\\Program Files\\Git\\usr\\bin\\gpg.exe  # Ruta al programa GPG en Windows (comentado)
+
+
+
+###############################################################################
+
+# [fetch]
+
+# Configuración para la obtención de datos (fetch)
+
+###############################################################################
+
+[fetch]
+
+    prune = true             # Elimina referencias remotas eliminadas
+
+
+
+###############################################################################
+
+# [core]
+
+# Configuraciones básicas de Git
+
+###############################################################################
+
+[core]
+
+    editor = nvim            # Usa 'nvim' como editor por defecto
+
+    longpaths = true         # Permite rutas largas en Windows
+
+    pager = diff-so-fancy | less --tabs=4 -RFX  # Configuración del paginador para diffs
+
+    excludesfile = ~/.gitignore         # Archivo global de exclusiones
+
+    attributesfile = ~/.gitattributes   # Archivo global de atributos
+
+    whitespace = space-before-tab,tab-in-indent,trailing-space,tabwidth=4  # Configuración de errores de espacios en blanco
+
+    untrackedCache = true    # Acelera comandos que involucran archivos no rastreados
+
+
+
+###############################################################################
+
+# [url]
+
+# Configuración de URL cortas
+
+###############################################################################
+
+[url "https://github.com/"]
+
+    insteadOf = git@github.com:
+
+[url "https://"]
+
+    insteadOf = git://
+
+# URL shorthands
+
+[url "git@github.com:"]
+
+    insteadOf = "gh:"
+
+    pushInsteadOf = "github:"
+
+    pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+
+    insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+
+    insteadOf = "gst:"
+
+    pushInsteadOf = "gist:"
+
+    pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+
+    insteadOf = "gist:"
+
+
+
+###############################################################################
+
+# [filter "lfs"]
+
+# Configuración para Git LFS (Large File Storage)
+
+###############################################################################
+
+[filter "lfs"]
+
+    clean = git-lfs clean -- %f
+
+    smudge = git-lfs smudge -- %f
+
+    required = true
+
+    process = git-lfs filter-process
+
+
+
+###############################################################################
+
+# [color]
+
+# Configuración de colores para la salida de comandos de Git
+
+###############################################################################
+
+[color]
+
+    ui = true                # Usa colores en los comandos de Git
+
+[color "branch"]
+
+    current = yellow reverse
+
+    local = yellow
+
+    remote = green
+
+[color "diff-highlight"]
+
+    oldNormal = red bold
+
+    oldHighlight = red bold 52
+
+    newNormal = green bold
+
+    newHighlight = green bold 22
+
+[color "status"]
+
+    added = yellow
+
+    changed = green
+
+    untracked = cyan
+
+    branch = magenta
+
+[color "diff"]
+
+    meta = 11
+
+    frag = magenta bold
+
+    func = 146 bold
+
+    commit = yellow bold
+
+    old = red bold
+
+    new = green bold
+
+    whitespace = red reverse
+
+    
+
+ ###############################################################################
+
+# [alias]
+
+# Definición de alias para simplificar comandos de Git
+
+###############################################################################
+
+[alias]
+
+    # Switch to a branch, creating it if necessary
+
+    go = checkout -B
+
+
+
+    # Switch to a branch, only if it exists
+
+    co = checkout
+
+
+
+    # Show status with just the most relevant info
+
+    s = status -s -b
+
+
+
+    ############################ Commits
+
+    # Git add everything
+
+    a = add .
+
+
+
+    # Git commit with a message
+
+    cm = commit -m
+
+
+
+    # Git commit, add all tracked files, and a commit message
+
+    ca = "!git commit -am"
+
+
+
+    # Commit all changes
+
+    ce = !git add -A && git commit -av
+
+
+
+    ############################ Push and pull
+
+    # Push the current branch
+
+    publish = "!git push origin $(git branch-name)"
+
+    ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
+
+
+
+    # Pull the current branch
+
+    pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
+
+
+
+    ############################ Logs
+
+    # View abbreviated SHA, description, and history graph of the latest 50 commits
+
+    l = log --pretty=oneline -n 50 --graph --abbrev-commit
+
+    lg = log --oneline --decorate --all --graph
+
+
+
+    # Show detailed history
+
+    hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
+
+
+
+    # Show history with modified files
+
+    llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
+
+
+
+    # Check signature of commits
+
+    logs = log --show-signature
+
+
+
+    ############################ Branches
+
+    # Show local branches
+
+    b = branch
+
+
+
+    # Show local and remote branches
+
+    br = branch -va
+
+
+
+    # Show remote branches
+
+    brr = branch -r
+
+
+
+    # Show remote branch movements
+
+    brm = show-branch -r
+
+
+
+    # Clone all branches
+
+    clone-branches = "!git branch -a | sed -n \"/\\/HEAD /d; /\\/master$/d; /remotes/p;\" | xargs -L1 git checkout -t"
+
+
+
+    # Show verbose output about tags, branches, or remotes
+
+    tags = tag -l
+
+    branches = branch -a
+
+    remotes = remote -v
+
+
+
+    # Remove branches that have already been merged with master
+
+    dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+
+
+    # Show branches merged into master
+
+    bm = branch --merged master
+
+
+
+    # Show branches not merged into master
+
+    bn = branch --no-merged master
+
+
+
+    ############################ Others    
+
+    # Clone Dotfiles repo
+
+    do = "!rm -rf $HOME/dotfiles2 && gh repo clone FQ211776/dotfiles_arch $HOME/dotfiles2 && cd $HOME/dotfiles2 && git clone-branches && git br"
+
+
+
+    # Create a repo, add README, send to GitHub
+
+    fresh = "!git init && touch README.md && git add . && git commit -m 'And so, it begins.' && gh repo create --source=. --public && git push -u origin HEAD"
+
+
+
+    # List current aliases
+
+    aliases = "!git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | grep -v ^'alias '"
+
+
+
+    # Show user configuration
+
+    me = "!git config --get-regexp ^user\\. | sed -e s/^user\\.// -e s/\\ /\\ =\\ / | grep -v ^'user '"
+
+
+
+    # Git add with query
+
+    a = "!git status --short | peco | awk '{print $2}' | xargs git add"
+
+
+
+    # Find a commit with query and show diff after select
+
+    df = "!git hist | peco | awk '{print $2}' | xargs -I {} git diff {}^ {}"
+
+
+
+    # Show the diff between the latest commit and the current state
+
+    d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+
+
+    # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+
+    di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+
+
+    ############################ hub && gh
+
+    gha = "!gh auth login"
+
+
+
+    # Open current repo in the browser
+
+    open = "!hub browse"
+
+  
+
+    issues = "!hub issue --limit 20"
+
+    issueso = "!hub browse -- issues"
+
+    wiki = "!hub browse gh0stzk/dotfiles/wiki"
+
+    dotfiles = "!hub browse FQ211776/dotfiles_arch"
+
+
+
+    ############################ Advanced workflow
+
+    # Git save
+
+    # This adds all changes, including untracked files, to the staging area and then commits with a SAVEPOINT message.
+
+    save = !git add -A && git commit -v -m 'SAVEPOINT'
+
+
+
+    # Git undo
+
+    # This alias allows me to quickly resume work after a save or wip. It undoes the last commit but keeps its changes, with files unstaged.
+
+    undo = reset HEAD~1 --mixed
+
+
+
+    # Git wip
+
+    # Stages all tracked changes and then commits with a WIP message.
+
+    wip = !git add -u && git commit -m 'WIP'
+
+
+
+    # Git wipe
+
+    # Adds changes in the working tree to a WIPE SAVEPOINT commit, then it wipes the commit.
+
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' --no-verify && git reset HEAD~1 --hard
+
+
+
+    # Git rename
+
+    # Adds all changes to the last commit without changing the commit message.
+
+    rename = !git add -A && git commit -a --amend
+
+
+
+    # Creating a branch before you try a merge or a rebase is like saving your game before you battle the boss.
+
+    
+
+    ############################ #danger danger
+
+    # Reset to the last commit, discarding all changes
+
+    rh = reset --hard
+
+    
+
+    # make your working directory look exactly the same as it was after the previous commit.
+
+    rh2 = reset --hard HEAD~1
+
+	
+
+	# Fast-forward all local branches to match the latest state on the remote
+
+    sync = "!hub sync"
+
+    
+
+    # Cancela una fusión en curso y revierte los cambios realizados durante la fusión
+
+    cancel-merge = !git merge --abort
+
+	
+
+	# Fusiona la rama master con la rama actual, creando un commit de fusión incluso si no es necesario debido a que los cambios en master son directamente aplicables.
+
+	merge-master = !git merge --no-ff master
+
+	
+
+	# busca un texto especifico en un archivo o en un mensaje de un commit 
+
+	findcommit = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+
+	findmessage = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+
+
+
+    ###########################################
+
+    mergeorigin = !"git merge origin/$(git mainormaster)"
+
+    
+
+    	# Essentially GitHub's compare view: show all 'ahead' changes (incl working tree) vs the merge-base
+
+    	diffbranch = !"git diff  $(git diffbase)"
+
+    	# Diff of branch that's not checked out. Doesn't include working tree (but obv doesnt need to)
+
+    	diffbranch-that = !"git diff origin/$(git mainormaster)...\"$1\" #"
+
+    	# Show commit log of unique commits of this branch (not on main)
+
+    	diffcommitsfrommain = !"git log --no-merges origin/$(git mainormaster).."
+
+    	#                                                                      ^^ also, 2 vs 3 dots: so important. https://stackoverflow.com/a/48681527
+
+    
+
+    	# Squash a branch to one commit against a branch with many non-main commits.
+
+    	# This can't be an alias, but here's the hack.
+
+    	#    # be on the new feature branch, be okay with rewriting it's history.
+
+    	#    git reset --soft (git merge-base Other_Branch_Name HEAD)
+
+    
+
+    
+
+    	# Two utils: 
+
+    	#   What's the ancestor commit this branch shares with (the parent branch, or, more likely...) main?
+
+    	#   diffbase = !"git config --get branch.$(command git symbolic-ref --short HEAD).base || git merge-base origin/$(git mainormaster) HEAD"
+
+    	diffbase = !"git merge-base origin/$(git mainormaster) HEAD"
+
+    	#   Is it a `main` or a `master` repo?
+
+    	mainormaster = !"git branch --format '%(refname:short)' --sort=-committerdate --list master main | head -n1"
+
+    
+
+    	# fyi to change a git checkout from master to main.. (gh's suggested commands:)
+
+    	#    git branch -m master main; git fetch origin; git branch -u origin/main main; git remote set-head origin -a
+
+    
+
+    	# commit (past) WIP changes with a message stating when they happened. (Cuz I sometimes leave changes uncommitted for a while, but want the dates for reference)
+
+    	# todo: maybe use `git commit --date=X` to set a past date. would need to pick one, tho.
+
+    	commitwip = !"git commit -am \"WIP. Last modified on:\n$(( git diff --name-only --cached; git ls-files --modified ) | uniq | xargs gstat -c '- %.19y %N')\""
+
+    
+
+    
+
+    	# I'm curious about some of these git + fzf aliases... 
+
+    	#   https://github.com/mattorb/dotfiles/blob/d16776eff48d831bcfaca58f1972e6b587f5dc28/git/.gitaliases#L89
+
+    	#   https://github.com/junegunn/fzf-git.sh
+
+    	#   https://brettterpstra.com/2021/11/25/git-better-with-fzf-and-fish/ and https://gist.github.com/aluxian/9c6f97557b7971c32fdff2f2b1da8209                   
+
+    
+
+    
+
+    [delta]
+
+    	max-line-length = 700
+
+    	# max-line-distance = 0.3 # better word-diff?
+
+    	syntax-theme = base16
+
+    	hyperlinks = true # i filed https://github.com/dandavison/delta/issues/362 but in 2022 i can't see brokenness in the issue nor repro weirdness. but i installed latest `less` anyway
+
+    	                  # oh i found it. it doubles up the sha and adds some `8;;` at the end.
+
+    					  # to fix.... install latest less (`less -V` should be >= v570). shouldn't need to set DELTA_PAGER.
+
+    	# line-numbers = true # seems nice until you want to copypaste and they're there…
+
+    	# navigate = true # eh. not great with short diffs.
+
+    
+
+    	file-style = bold yellow ul
+
+    	file-decoration-style = yellow ol ul
+
+    	hunk-header-decoration-style = blue
+
+    	hunk-header-line-number-style = purple bold
+
+    
+
+    [interactive]
+
+    	diffFilter = delta --color-only --features=interactive
+
+    
+
+    [diff]
+
+    	# Show blocks of moved text of at least 20 alphanumeric characters differently than adds/deletes
+
+    	# https://blog.github.com/2018-04-05-git-217-released/
+
+    	colorMoved = default
+
+    	# Detect copies in addition to renames
+
+    	renames = copies
+
+    	# A la `git submodule summary`
+
+    	submodule = log
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    # push easily. http://stackoverflow.com/a/23918418/89484
+
+    [push]
+
+    	default = current
+
+    	followTags = true
+
+    	autoSetupRemote = true
+
+   [checkout]
+
+    	defaultRemote = origin
+
+    
+
+    
+[include]
+	path = ~/.gitconfig-local
