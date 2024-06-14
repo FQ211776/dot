@@ -401,7 +401,7 @@ desde_aur() {
         }
     fi
 
-    aur_dependencias=(ttf-meslo-nerd zoxide-git flutter gitkraken ttf-unifont noto-color-emoji-fontconfig xorg-fonts-misc ttf-dejavu ttf-meslo-nerd-font-powerlevel10k noto-fonts-emoji powerline-fonts microsoft-edge-stable-bin microsoft-edge-beta-bin bcompare brew ghq mise git-delta ydiff ghq)
+    aur_dependencias=(ttf-meslo-nerd zoxide-git flutter gitkraken ttf-unifont noto-color-emoji-fontconfig xorg-fonts-misc ttf-dejavu ttf-meslo-nerd-font-powerlevel10k noto-fonts-emoji powerline-fonts microsoft-edge-stable-bin microsoft-edge-beta-bin bcompare brew ghq mise git-delta ydiff ghq nodejs-commitizen)
     #siji-ng localsend
 
     # Función para verificar si un paquete está instalado en AUR
@@ -538,3 +538,4 @@ main() {
 main
 
 # https://github.com/ymattw/ydiff
+# https://github.com/commitizen/cz-cli
