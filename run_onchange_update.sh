@@ -57,8 +57,14 @@ display_menu() {
     gum style --foreground 35 "1. Actualizar copia remota .zshrc"
     gum style --foreground 35 "2. Editar copia local .zshrc"
     echo
-    gum style --foreground 35 "3. Actualizar copia remota .gitconfig"
-    gum style --foreground 35 "4. Editar copia local .gitconfig"
+    gum style --foreground 35 "3. Actualizar copia remota .czrc"
+    gum style --foreground 35 "4. Editar copia local .czrc"
+    echo
+    gum style --foreground 35 "5. Actualizar copia remota .gitconfig"
+    gum style --foreground 35 "6. Editar copia local .gitconfig"
+    echo
+    gum style --foreground 35 "7. Actualizar copia remota ~/.config/lazygit/config.yml"
+    gum style --foreground 35 "8. Editar copia local ~/.config/lazygit/config.yml"
     echo
     gum style --foreground 35 "3. Clonar o actualizar copia local de los dotfiles originales."
     gum style --foreground 35 "4. Instalar los dotfiles originales."
@@ -78,13 +84,13 @@ fi
 ########## ---------- ~/.zshrc ---------- ##########
 
 add_zshrc(){
-    logo "Actualizar copia remota.zshrc"
+    logo "Actualizar copia remota ~/.zshrc"
     chezmoi add -r ~/.zshrc
     sleep 2
 }
 
 mod_zshrc(){
-    logo "Editar copia remota.zshrc"
+    logo "Editar copia local ~/.zshrc"
     chezmoi edit ~/.zshrc --apply   
     sleep 2
 }
@@ -92,14 +98,41 @@ mod_zshrc(){
 ########## ---------- ~/.gitconfig ---------- ##########
 
 add_gitconfig(){
-    logo "Actualizar copia remota.zshrc"
+    logo "Actualizar copia remota ~/.gitconfig"
     chezmoi add -r ~/.gitconfig
     sleep 2
 }
 
 mod_gitconfig(){
-    logo "Editar copia remota.zshrc"
+    logo "Editar copia local ~/.gitconfig"
     chezmoi edit ~/.gitconfig --apply   
+    sleep 2
+}
+
+
+########## ---------- ~/.czrc ---------- ##########
+add_czrc(){
+    logo "Actualizar copia remota ~/.czrc"
+    chezmoi add -r ~/.czrc
+    sleep 2
+}
+
+mod_czrc(){
+    logo "Editar copia local ~/.czrc"
+    chezmoi edit ~/.czrc --apply   
+    sleep 2
+}
+
+########## ---------- ~/.config/lazygit/config.yml ---------- ##########
+add_lazygit(){
+    logo "Actualizar copia remota ~/.config/lazygit/config.yml"
+    chezmoi add -r ~/.config/lazygit/
+    sleep 2
+}
+
+mod_lazygit(){
+    logo "Editar copia local ~/.config/lazygit/config.yml"
+    chezmoi edit ~/.config/lazygit/config.yml --apply   
     sleep 2
 }
 
@@ -119,6 +152,12 @@ main() {
         #
         3) add_gitconfig ;;
         4) mod_gitconfig ;;
+        #
+        5) add_czrc ;;
+        6) mod_czrc ;;
+        #
+        7) add_lazygit ;;
+        8) mod_lazygit ;;
         3) Instalar_repositorio ;;
         4) Instalar_dotfiles ;;
         5) zsh_ ;;
