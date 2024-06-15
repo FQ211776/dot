@@ -127,7 +127,7 @@ Instalar_paquetes_adicionales() {
         yt-dlp bat bat-extras tldr
         diff-so-fancy geany hub github-cli peco wget eza
         zsh fish grml-zsh-config wget xorg-xfd curl
-        wezterm ttf-nerd-fonts-symbols-mono python-nautilus noto-fonts-emoji xsel micro lazygit ark fzf atuin fd)
+        wezterm ttf-nerd-fonts-symbols-mono python-nautilus noto-fonts-emoji xsel micro lazygit ark fzf atuin fd starship)
     is_installed() {
         pacman -Q "$1" &>/dev/null
     }
@@ -401,7 +401,7 @@ desde_aur() {
         }
     fi
 
-    aur_dependencias=(ttf-meslo-nerd zoxide-git flutter gitkraken ttf-unifont noto-color-emoji-fontconfig xorg-fonts-misc ttf-dejavu ttf-meslo-nerd-font-powerlevel10k noto-fonts-emoji powerline-fonts microsoft-edge-stable-bin microsoft-edge-beta-bin bcompare brew ghq mise git-delta ydiff ghq nodejs-commitizen)
+    aur_dependencias=(ttf-meslo-nerd zoxide-git flutter gitkraken ttf-unifont noto-color-emoji-fontconfig xorg-fonts-misc ttf-dejavu ttf-meslo-nerd-font-powerlevel10k noto-fonts-emoji powerline-fonts microsoft-edge-stable-bin microsoft-edge-beta-bin bcompare brew ghq mise git-delta ydiff ghq nodejs-commitizen topgrade visual-studio-code-insiders-bin mise) 
     #siji-ng localsend
 
     # Función para verificar si un paquete está instalado en AUR
